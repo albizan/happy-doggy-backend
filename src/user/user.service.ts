@@ -21,6 +21,10 @@ export class UserService {
     return await this.userRepository.findOne({ email });
   }
 
+  async findAll() {
+    return await this.userRepository.find();
+  }
+
   // Create User Instance and return it, user is not saved in th DB yet
   async create(createUserDto: CreateUserDto): Promise<User> {
     return await this.userRepository.create({
