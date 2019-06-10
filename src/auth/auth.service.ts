@@ -1,9 +1,10 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { RegisterUserDto } from './dtos/registerUser.dto';
 import { JwtPayload } from './dtos/payload.dto';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
+import { LoginUserDto } from './dtos/loginUser.dto';
 
 @Injectable()
 export class AuthService {
@@ -32,6 +33,21 @@ export class AuthService {
 
     // Save the created user
     user = await this.userService.save(user);
+
+    // Sign the payload and return encypted jwt
+    return await this.sign({ id: user.id, email: email });
+  }
+
+  async login(data: LoginUserDto): Promise<string> {
+    const { email, password } = data;
+    let user = await this.userService.findByEmail(email);
+    if (!user) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
 
     // Sign the payload and return encypted jwt
     return await this.sign({ id: user.id, email: email });
