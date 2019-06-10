@@ -1,13 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToMany,
-  JoinTable,
-  OneToMany,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class User {
@@ -31,10 +22,4 @@ export class User {
     nullable: true,
   })
   resetToken: string;
-
-  @CreateDateColumn()
-  insertedAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }
