@@ -1,5 +1,5 @@
 import { Controller, Post, Get, UseGuards } from '@nestjs/common';
-import { UserService } from 'dist/user/user.service';
+import { UserService } from './user.service';
 import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('api/user')
