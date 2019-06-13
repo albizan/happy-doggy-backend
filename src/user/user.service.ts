@@ -12,23 +12,23 @@ export class UserService {
   ) {}
 
   // Find a user given its ID
-  async findById(id: string) {
+  async findById(id: string): Promise<User> {
     return await this.userRepository.findOne(id);
   }
 
   // Find a user given its email
-  async findByEmail(email: string) {
+  async findByEmail(email: string): Promise<User> {
     return await this.userRepository.findOne({ email });
   }
 
-  async findAll() {
+  async findAll(): Promise<User[]> {
     return await this.userRepository.find();
   }
 
-  // Create User Instance and return it, user is not saved in th DB yet
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  // Create and return User Instance, user is not saved in th DB yet
+  async create(data: CreateUserDto): Promise<User> {
     return await this.userRepository.create({
-      ...createUserDto,
+      ...data,
     });
   }
 
