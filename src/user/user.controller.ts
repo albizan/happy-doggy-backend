@@ -1,4 +1,4 @@
-import { Controller, Post, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, UseGuards, Req } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthGuard } from '../auth/auth.guard';
 
@@ -8,7 +8,9 @@ export class UserController {
 
   @Get('all')
   @UseGuards(AuthGuard)
-  async findAll() {
+  async findAll(@Req() request) {
+    // Here I can extract the userID from the request Object
+    console.log(request.jwt);
     return await this.userService.findAll();
   }
 }
